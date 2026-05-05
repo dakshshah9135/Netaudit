@@ -1,0 +1,11 @@
+# NetAudit — Python dependencies
+# All standard library except these optional extras:
+
+# No third-party packages required for core functionality.
+# NetAudit uses only Python 3.10+ standard library modules:
+#   socket, concurrent.futures, argparse, json, pathlib,
+#   dataclasses, datetime, time, sys, os
+
+# Optional — install for future enhancements:
+# colorama>=0.4.6    # Windows ANSI color support
+# requests>=2.31.0   # For future IP reputation API integration

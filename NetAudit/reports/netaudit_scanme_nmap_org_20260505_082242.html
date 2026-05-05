@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NetAudit Report — scanme.nmap.org</title>
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #3b82f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── Header ── */
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); padding: 2.5rem 3rem; border-bottom: 1px solid var(--border); }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; }
+  .logo { display: flex; align-items: center; gap: 0.75rem; }
+  .logo-icon { width: 42px; height: 42px; background: #3b82f6; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .logo-text { font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .logo-sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .score-card { text-align: center; }
+  .score-num { font-size: 3.5rem; font-weight: 900; color: #16a34a; line-height: 1; }
+  .score-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
+  .grade-badge { display: inline-block; padding: 0.2rem 0.9rem; background: #16a34a22; color: #16a34a; border: 1px solid #16a34a; border-radius: 6px; font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
+
+  /* ── Meta grid ── */
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .meta-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
+  .meta-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .meta-value { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+
+  /* ── Summary ── */
+  .summary-box { margin: 2rem 3rem; background: var(--card); border: 1px solid var(--border); border-left: 4px solid #16a34a; border-radius: 10px; padding: 1.25rem 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+
+  /* ── Severity chips ── */
+  .sev-row { display: flex; gap: 1rem; flex-wrap: wrap; padding: 0 3rem 1.5rem; }
+  .sev-chip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 1rem; display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+  .sev-num { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+  .sev-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Table ── */
+  .table-wrap { padding: 0 3rem 3rem; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  thead tr { background: #0f172a; }
+  th { padding: 0.75rem 1rem; text-align: left; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 0.85rem 1rem; border-bottom: 1px solid #1e293b; vertical-align: top; }
+  tr:hover td { background: #1e293b55; }
+  .desc, .rec { max-width: 220px; line-height: 1.5; color: var(--muted); font-size: 0.82rem; }
+  .rec { color: #93c5fd; }
+
+  /* ── Badges ── */
+  .badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 5px; font-size: 0.7rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+  .banner { background: #0f172a; color: #67e8f9; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; word-break: break-all; }
+  .na { color: #475569; }
+
+  /* ── Footer ── */
+  footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div>
+        <div class="logo-text">NetAudit</div>
+        <div class="logo-sub">Network Security Scanner</div>
+      </div>
+    </div>
+    <div class="score-card">
+      <div class="score-num">90</div>
+      <div class="score-label">Security Score</div>
+      <div class="grade-badge">Grade A</div>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-label">Target</div>
+      <div class="meta-value">scanme.nmap.org</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">IP Address</div>
+      <div class="meta-value">45.33.32.156</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Scan Time</div>
+      <div class="meta-value">2026-05-05 08:22:42</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Ports Scanned</div>
+      <div class="meta-value">43</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Open Ports Found</div>
+      <div class="meta-value">2</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Scan Duration</div>
+      <div class="meta-value">2.11s</div>
+    </div>
+  </div>
+</div>
+
+<div class="summary-box">2 open port(s) detected with low-to-medium risk. No critical exposures found. Review recommendations to further harden the target.</div>
+
+<div class="sev-row"><div class="sev-chip" style="border-left:4px solid #d97706"><span class="sev-num" style="color:#d97706">1</span><span class="sev-label">MEDIUM</span></div><div class="sev-chip" style="border-left:4px solid #2563eb"><span class="sev-num" style="color:#2563eb">1</span><span class="sev-label">INFO</span></div></div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Port</th>
+        <th>Service</th>
+        <th>Risk Level</th>
+        <th>Encryption</th>
+        <th>Description</th>
+        <th>Recommendation</th>
+        <th>Banner</th>
+        <th>Latency</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><strong>80</strong></td>
+          <td>HTTP</td>
+          <td><span class="badge" style="background:#d97706">MEDIUM</span></td>
+          <td>🔓 Plaintext</td>
+          <td class="desc">Unencrypted web traffic. Credentials and session data transmitted in plaintext.</td>
+          <td class="rec">Force redirect to HTTPS (port 443). Use HSTS headers.</td>
+          <td><code class="banner">HTTP/1.1 426 Upgrade Required</code></td>
+          <td>5.6 ms</td>
+        </tr>
+        <tr>
+          <td><strong>443</strong></td>
+          <td>HTTPS</td>
+          <td><span class="badge" style="background:#2563eb">INFO</span></td>
+          <td>🔒 Encrypted</td>
+          <td class="desc">Encrypted web traffic. Standard secure web server port.</td>
+          <td class="rec">Verify TLS version (TLS 1.2+ required). Check certificate validity.</td>
+          <td><code class="banner">HTTP/1.1 426 Upgrade Required</code></td>
+          <td>5.7 ms</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  Generated by <strong>NetAudit v1.0</strong> &nbsp;|&nbsp;
+  Built by <strong>Daksh Shah</strong> &nbsp;|&nbsp;
+  <a href="https://github.com/daksh-shah9135/netaudit" target="_blank">github.com/daksh-shah9135/netaudit</a>
+  &nbsp;|&nbsp; For educational and authorized security testing only.
+</footer>
+
+</body>
+</html>

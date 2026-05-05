@@ -1,0 +1,47 @@
+{
+  "ports": {
+    "21":  { "service": "FTP",        "risk": "HIGH",     "encrypted": false, "description": "File Transfer Protocol transmits data in plaintext. Credentials and files can be intercepted.", "recommendation": "Disable FTP. Use SFTP (port 22) or FTPS instead." },
+    "22":  { "service": "SSH",        "risk": "LOW",      "encrypted": true,  "description": "Secure Shell is encrypted. Exposure is acceptable but should be hardened.", "recommendation": "Disable root login, use key-based auth, and restrict by IP if possible." },
+    "23":  { "service": "Telnet",     "risk": "CRITICAL", "encrypted": false, "description": "Telnet sends ALL data including passwords in plaintext. Considered obsolete.", "recommendation": "Disable Telnet immediately. Replace with SSH." },
+    "25":  { "service": "SMTP",       "risk": "MEDIUM",   "encrypted": false, "description": "Mail server open to the internet may be abused for spam relaying.", "recommendation": "Restrict to authenticated users only. Enable STARTTLS." },
+    "53":  { "service": "DNS",        "risk": "MEDIUM",   "encrypted": false, "description": "Open DNS can be used for amplification attacks or zone transfer abuse.", "recommendation": "Restrict zone transfers. Consider DNS over HTTPS (DoH)." },
+    "80":  { "service": "HTTP",       "risk": "MEDIUM",   "encrypted": false, "description": "Unencrypted web traffic. Credentials and session data transmitted in plaintext.", "recommendation": "Force redirect to HTTPS (port 443). Use HSTS headers." },
+    "110": { "service": "POP3",       "risk": "HIGH",     "encrypted": false, "description": "Email retrieval in plaintext. Credentials easily captured on the network.", "recommendation": "Disable POP3. Use POP3S (port 995) or IMAP over TLS." },
+    "135": { "service": "MSRPC",      "risk": "HIGH",     "encrypted": false, "description": "Microsoft RPC endpoint mapper. Common attack vector for Windows exploits.", "recommendation": "Block port 135 on the firewall perimeter. Restrict to internal network only." },
+    "137": { "service": "NetBIOS-NS", "risk": "HIGH",     "encrypted": false, "description": "NetBIOS Name Service leaks internal hostnames and network topology.", "recommendation": "Disable NetBIOS. Block ports 137-139 at the firewall." },
+    "139": { "service": "NetBIOS-SS", "risk": "HIGH",     "encrypted": false, "description": "NetBIOS Session Service. Used in legacy SMB. Exploited in EternalBlue (WannaCry).", "recommendation": "Disable NetBIOS over TCP/IP. Use SMB2/3 over port 445 only." },
+    "143": { "service": "IMAP",       "risk": "HIGH",     "encrypted": false, "description": "Email access in plaintext. Password sniffing risk on the network.", "recommendation": "Use IMAPS (port 993) with TLS enforced." },
+    "443": { "service": "HTTPS",      "risk": "INFO",     "encrypted": true,  "description": "Encrypted web traffic. Standard secure web server port.", "recommendation": "Verify TLS version (TLS 1.2+ required). Check certificate validity." },
+    "445": { "service": "SMB",        "risk": "CRITICAL", "encrypted": false, "description": "Server Message Block. Exploited by EternalBlue (WannaCry, NotPetya). High-risk exposure.", "recommendation": "Block SMB from the internet immediately. Apply MS17-010 patch. Use SMB signing." },
+    "512": { "service": "REXEC",      "risk": "CRITICAL", "encrypted": false, "description": "Remote Execution service. Legacy Unix protocol transmitting credentials in plaintext.", "recommendation": "Disable rexec, rlogin, rsh services. Use SSH exclusively." },
+    "513": { "service": "RLOGIN",     "risk": "CRITICAL", "encrypted": false, "description": "Remote Login — legacy Unix protocol with no encryption.", "recommendation": "Disable immediately. Replace with SSH." },
+    "514": { "service": "RSH/Syslog", "risk": "HIGH",     "encrypted": false, "description": "Remote Shell or Syslog. RSH has no authentication. Syslog logs can be intercepted.", "recommendation": "Disable RSH. For Syslog, use TLS-encrypted syslog (RFC 5425)." },
+    "1433":{ "service": "MSSQL",      "risk": "CRITICAL", "encrypted": false, "description": "Microsoft SQL Server exposed to the network. Direct database access risk.", "recommendation": "Never expose database ports to the internet. Restrict to application server IPs only." },
+    "1521":{ "service": "Oracle DB",  "risk": "CRITICAL", "encrypted": false, "description": "Oracle Database listener exposed. Direct database access risk.", "recommendation": "Block at firewall. Restrict to application tier only." },
+    "2049":{ "service": "NFS",        "risk": "HIGH",     "encrypted": false, "description": "Network File System with no built-in encryption. File access without credentials possible.", "recommendation": "Restrict NFS exports to specific IPs. Use NFSv4 with Kerberos." },
+    "3306":{ "service": "MySQL",      "risk": "CRITICAL", "encrypted": false, "description": "MySQL database port exposed. Brute-force and data exfiltration risk.", "recommendation": "Bind MySQL to 127.0.0.1 only. Never expose to the internet." },
+    "3389":{ "service": "RDP",        "risk": "CRITICAL", "encrypted": true,  "description": "Remote Desktop Protocol. High-value target — BlueKeep, DejaBlue exploits. Brute force risk.", "recommendation": "Disable if unused. Use VPN + RDP. Enable NLA. Restrict by IP." },
+    "4444":{ "service": "Metasploit", "risk": "CRITICAL", "encrypted": false, "description": "Default Metasploit reverse shell port. Active attack or malware indicator.", "recommendation": "Investigate immediately. Block and audit all connections to this port." },
+    "5432":{ "service": "PostgreSQL", "risk": "CRITICAL", "encrypted": false, "description": "PostgreSQL database exposed to network. Unauthorized access risk.", "recommendation": "Restrict to localhost or application server. Never expose publicly." },
+    "5900":{ "service": "VNC",        "risk": "CRITICAL", "encrypted": false, "description": "VNC remote desktop — often misconfigured with weak or no passwords.", "recommendation": "Disable VNC. If needed, tunnel over SSH. Enforce strong passwords." },
+    "6379":{ "service": "Redis",      "risk": "CRITICAL", "encrypted": false, "description": "Redis cache server. Default config has NO authentication. Widely exploited.", "recommendation": "Bind to 127.0.0.1. Set requirepass. Never expose Redis to the internet." },
+    "8080":{ "service": "HTTP-Alt",   "risk": "MEDIUM",   "encrypted": false, "description": "Alternative HTTP port. Often used by dev/test servers or proxy servers.", "recommendation": "Ensure dev/test servers are not publicly accessible. Use HTTPS." },
+    "8443":{ "service": "HTTPS-Alt",  "risk": "LOW",      "encrypted": true,  "description": "Alternative HTTPS port. Verify certificate and TLS configuration.", "recommendation": "Ensure valid TLS certificate and up-to-date TLS version." },
+    "9200":{ "service": "Elasticsearch","risk":"CRITICAL", "encrypted": false, "description": "Elasticsearch exposed with NO authentication by default. Millions of records leaked globally.", "recommendation": "Add authentication immediately. Bind to localhost. Never expose publicly." },
+    "27017":{"service":"MongoDB",     "risk": "CRITICAL", "encrypted": false, "description": "MongoDB with no authentication by default. Has caused major data breaches.", "recommendation": "Enable authentication. Bind to 127.0.0.1. Restrict at firewall." }
+  },
+  "risk_scores": {
+    "CRITICAL": 40,
+    "HIGH":     20,
+    "MEDIUM":   10,
+    "LOW":       3,
+    "INFO":      0
+  },
+  "risk_colors": {
+    "CRITICAL": "#dc2626",
+    "HIGH":     "#ea580c",
+    "MEDIUM":   "#d97706",
+    "LOW":      "#16a34a",
+    "INFO":     "#2563eb"
+  }
+}
